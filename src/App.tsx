@@ -45,6 +45,8 @@ const App = () => {
     (state: RootState) => state.userReducer
   );
 
+  // const loading = false;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -52,9 +54,15 @@ const App = () => {
       if (user) {
         const data = await getUser(user.uid);
         dispatch(userExist(data.user));
-      } else dispatch(userNotExist());
+      } else {
+        console.log("called");
+        dispatch(userNotExist());
+      };
     });
+    if(!user) dispatch(userNotExist());
   }, []);
+
+  
 
   return loading ? (
     <Loader />
